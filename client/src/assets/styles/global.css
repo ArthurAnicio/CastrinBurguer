@@ -1,0 +1,34 @@
+:root{
+    --branco: #f1dee8;
+    --preto: #0b0224;
+    --cinza: #b09abe;
+    --vermelho: #bb2035;
+    --vermelho2: #811c2a;
+    --laranja: #cf432a;
+    --laranja2: #9e2814;
+    --laranja3: #d87236;
+    --amarelo: #e6e210;
+    --amarelo2: #e6c610;
+    --amarelo3: #e9dd6e;
+    --azul: #7474d6;
+    --roxo: #7a30e9;
+    --roxo2: #5314b3;
+
+    font-family: Poppins;
+    font-size: 60%;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: linear-gradient(to bottom, var(--azul), var(--roxo));
+    background-repeat: no-repeat;
+}
+
+#content{
+    min-height: 80vh;
+}
