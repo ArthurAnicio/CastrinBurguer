@@ -1,5 +1,6 @@
 :root{
-    --branco: #f1dee8;
+    --branco: #fff6fb;
+    --branco2: #fdfafc;
     --preto: #0b0224;
     --cinza: #b09abe;
     --vermelho: #bb2035;
@@ -10,9 +11,12 @@
     --amarelo: #e6e210;
     --amarelo2: #e6c610;
     --amarelo3: #e9dd6e;
-    --azul: #7474d6;
+    --azul: #3973f0;
+    --azul2: #2f2fd4;
     --roxo: #7a30e9;
     --roxo2: #5314b3;
+    --verde: #27eb68;
+    --verde2: #20aa50;
 
     font-family: Poppins;
     font-size: 60%;
@@ -25,10 +29,11 @@
 }
 
 body{
-    background: linear-gradient(to bottom, var(--azul), var(--roxo));
+    background: var(--cinza);
     background-repeat: no-repeat;
 }
 
 #content{
+    width: 100%;
     min-height: 80vh;
 }

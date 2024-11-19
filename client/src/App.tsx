@@ -1,14 +1,9 @@
 import './assets/styles/global.css'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import RoutesWeb from './Routes'
 
 function App() {
   return (
-    <>
-      <Header/>
-      <div id='content'></div>
-      <Footer/>
-    </>
+    <RoutesWeb />
   )
 }
 
