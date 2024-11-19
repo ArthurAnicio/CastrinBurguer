@@ -11,7 +11,11 @@ footer{
 }
 
 footer span{
-    color: var(--roxo2);
+    color: var(--rosa);
     margin-left: 1rem;
     font-style: italic;
+}
+
+.rodapeAdm{
+    background: linear-gradient(to bottom, var(--roxo), var(--azul));
 }

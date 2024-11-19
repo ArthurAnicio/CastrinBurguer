@@ -10,17 +10,15 @@ function Header() {
   const [senha, setSenha] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
-  const user = location.state.user || {id: 0, nome: '', email:'', senha: '', tipo:'user'};
+  const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
 
-  useEffect(()=> {
+  useEffect(() => {
     if (user.id > 0) {
-      setIsLogging(true);
       setTipo(user.tipo);
     } else {
-      setIsLogging(false);
       setTipo('user');
     }
-  })
+  }, [user]);
 
   async function login() {
     if (email && senha) {
@@ -28,6 +26,7 @@ function Header() {
         const response = await api.get(`/user?email=${email}&senha=${senha}`);
         if (response.status === 200) {
           navigate('/', { state: { user: response.data } });
+          setIsLogging(false);
         } else {
           alert('Email ou senha inválidos!');
         }

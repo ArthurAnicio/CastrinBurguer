@@ -13,6 +13,7 @@
     --amarelo3: #e9dd6e;
     --azul: #3973f0;
     --azul2: #2f2fd4;
+    --rosa: #e66ccb;
     --roxo: #7a30e9;
     --roxo2: #5314b3;
     --verde: #27eb68;
@@ -36,4 +37,5 @@ body{
 #content{
     width: 100%;
     min-height: 80vh;
+    padding: 2rem;
 }

@@ -15,18 +15,19 @@ export default class UserController {
     }
   }
   async create(req: Request, res: Response) {
-    const { nome, tipo, email, senha } = req.body;
+    const { nome, email, senha, tipo } = req.body;
     const trx = await db.transaction();
-
+    console.log(nome, tipo, email, senha);
     try {
-      await trx("users").insert({
+      const user = await trx("users").insert({
         nome,
         email,
         senha,
         tipo
       });
+      console.log(user)
       await trx.commit();
-      res.status(200).json({ message: "Usuário cadastrado com sucesso!" });
+      res.status(200).json(user);
     } catch (err) {
       await trx.rollback();
       res.status(400).json({ error: `Erro ao cadastrar novo usuário: ${err}` });

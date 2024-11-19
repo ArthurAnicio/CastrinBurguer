@@ -1,0 +1,68 @@
+.signUpForm{
+    width: 500px;
+    margin: auto;
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--branco);
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.signUpForm h2{
+    width: 100%;
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--amarelo);
+    text-align: center;
+    padding: 2rem;
+    background: var(--laranja);
+}
+
+.signUpForm form{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.campoForm {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.campoForm label{
+    width: 20%;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--preto);
+}
+
+.campoForm input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--preto);
+    font-size: 1.8rem;
+}
+
+form button {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 5vh;
+    border: none;
+    border-radius: 5px;
+    background: var(--roxo2);
+    color: var(--amarelo);
+    font-size: 2rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+form button:hover {
+    scale: 0.95;
+    background: var(--roxo);
+}
