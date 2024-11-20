@@ -12,7 +12,7 @@ interface ProdutoItem {
     descricao: string;
     preco: string;
     quantidade: number;
-    imagem: string;
+    image: string;
 }
 
 function Home() {
@@ -23,7 +23,7 @@ function Home() {
         descricao: '',
         preco: '',
         quantidade: 0,
-        imagem: '',
+        image: '',
     });
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
@@ -72,7 +72,7 @@ function Home() {
             console.log('Produto adicionado:', response.data);
             setProdutos([...produtos, { ...newProduto, id: response.data.id }]);
             setProdutosFiltrados([...produtos, { ...newProduto, id: response.data.id }]);
-            setNewProduto({ nome: '', descricao: '', preco: '', quantidade: 0, imagem: '' });
+            setNewProduto({ nome: '', descricao: '', preco: '', quantidade: 0, image: '' });
             setIsAdding(false);
         } catch (error) {
             console.error('Erro ao adicionar produto:', error);
@@ -98,17 +98,6 @@ function Home() {
 
    
     return (
-<<<<<<< HEAD
-    <>
-        <Header />
-        <div id="content">
-            
-        </div>
-        <Footer />
-    </>
-    )
-};
-=======
         <>
             <Header />
             <div id="content">
@@ -149,8 +138,8 @@ function Home() {
                         <input
                             type="text"
                             placeholder="URL da imagem"
-                            value={newProduto.imagem}
-                            onChange={(e) => setNewProduto({ ...newProduto, imagem: e.target.value })}
+                            value={newProduto.image}
+                            onChange={(e) => setNewProduto({ ...newProduto, image: e.target.value })}
                         />
                         <button onClick={handleAddProduto}>Salvar Produto</button>
                     </div>
@@ -160,7 +149,7 @@ function Home() {
                         <Product
                             key={produto.id}
                             produto={produto}
-                            onDelete={areAdm ? handleDelete : undefined}
+                            onDelete={areAdm ? handleDelete : () => {}}
                         />
                     ))}
                 </div>
@@ -169,6 +158,5 @@ function Home() {
         </>
     );
 }
->>>>>>> 1547761dafad4dba6e8299195c615dcd4ddd9f2a
 
 export default Home;
