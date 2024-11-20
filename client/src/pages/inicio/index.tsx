@@ -88,8 +88,14 @@ function Home() {
         setProdutosFiltrados((prev) => prev.filter((produto) => produto.id !== id));
     }
 
-    function filtar() {
-        
+    function filtar(filtro: string) {
+        setProdutosFiltrados(produtos.filter((produto) =>
+            produto.categoria.toLowerCase().includes(filtro.toLowerCase())
+        ));
+    }
+
+    function desfiltrar(){
+        setProdutosFiltrados(produtos);
     }
 
    
@@ -97,7 +103,42 @@ function Home() {
         <>
             <Header />
             <div id="content">
-                
+                <div className="filtro">
+                    <button 
+                        className="filtroBtn" 
+                        onClick={() => filtar('hamburguer')}
+                    >
+                        Sanduíches 
+                        <i className="fa-solid fa-burger"></i>
+                    </button>
+                    <button 
+                        className="filtroBtn" 
+                        onClick={() => filtar('bebida')}
+                    >
+                        Bebidas 
+                        <i className="fa-solid fa-whiskey-glass"></i>
+                    </button>
+                    <button 
+                        className="filtroBtn" 
+                        onClick={() => filtar('acompanhamento')}
+                    >   
+                        Acompanhamentos 
+                        <i className="fa-solid fa-bowl-food"></i>
+                    </button>
+                    <button 
+                        className="filtroBtn" 
+                        onClick={() => filtar('sobremesa')}
+                    >  
+                        Sobremesas 
+                        <i className="fa-solid fa-ice-cream"></i>
+                    </button>
+                    <button 
+                        className="tirarFiltro" 
+                        onClick={desfiltrar}
+                    >
+                        <i className="fa-solid fa-x"></i>
+                    </button>
+                </div>
                 <div className='cardapio'>
                     {produtosFiltrados.map((produto) => (
                         <Product
