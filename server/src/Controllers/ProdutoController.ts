@@ -43,40 +43,56 @@ export default class ProdutoController{
             }
         }
     }
-    async update(req: Request, res: Response){
-        const {id, nome, descricao, quantidade, preco, categoria, imagem} = req.body
+    async update(req: Request, res: Response) {
+        const { id, nome, descricao, quantidade, preco, categoria, imagem } = req.body;
         const trx = await db.transaction();
-
-        if(!nome ||!descricao ||!preco ||!quantidade ||!categoria ||!imagem){
-            return res.status(400).json({error: 'Todos os dados são obrigatórios!'});
-        }else{
-            try{
-                await trx('produtos')
-                .update({nome, descricao, quantidade, preco, categoria, imagem})
-                .where('id', id);
-                await trx.commit();
-                return res.status(200).json({message: 'Produto atualizado com sucesso!'});
-            }catch(err){
-               return res.status(400).json({error: `Erro ao atualizar produto: ${err}`});
+    
+        if (!id) {
+            return res.status(400).json({ error: 'ID do produto é obrigatório!' });
+        }
+    
+        if (!nome || !descricao || !preco || !quantidade || !categoria || !imagem) {
+            return res.status(400).json({ error: 'Todos os dados são obrigatórios!' });
+        }
+    
+        const precoNormalizado = preco.startsWith('R$') ? preco : `R$ ${preco}`;
+    
+        try {
+            const produto = await db.select('*').from('produtos').where('id', id).first();
+            if (!produto) {
+                return res.status(404).json({ error: 'Produto não encontrado!' });
             }
+    
+            await trx('produtos')
+                .update({ nome, descricao, quantidade, preco: precoNormalizado, categoria, imagem })
+                .where('id', id);
+    
+            await trx.commit();
+            return res.status(200).json({ message: 'Produto atualizado com sucesso!' });
+        } catch (err) {
+            await trx.rollback();
+            return res.status(400).json({ error: `Erro ao atualizar produto: ${err}` });
         }
     }
-    async delete(req: Request, res: Response){
-        const {id} = req.query
+    async delete(req: Request, res: Response) {
+        const { id } = req.query;
         const trx = await db.transaction();
-
-        if(!id){
-            return res.status(400).json({error: 'ID do produto não fornecido!'});
-        }else{
-            try{
-                await trx('produtos')
-                .delete()
-                .where('id', id);
-                await trx.commit();
-                return res.status(200).json({message: 'Produto excluído com sucesso!'});
-            }catch(err){
-                return res.status(400).json({error: `Erro ao excluir produto: ${err}`});
+            if (!id) {
+            return res.status(400).json({ error: 'ID do produto é obrigatório!' });
+        }
+    
+        try {
+            const produto = await db.select('*').from('produtos').where('id', id).first();
+            if (!produto) {
+                return res.status(404).json({ error: 'Produto não encontrado!' });
             }
+    
+            await trx('produtos').delete().where('id', id);
+            await trx.commit();
+            return res.status(200).json({ message: 'Produto excluído com sucesso!' });
+        } catch (err) {
+            await trx.rollback();
+            return res.status(400).json({ error: `Erro ao excluir produto: ${err}` });
         }
     }
 }
