@@ -24,10 +24,7 @@ function Home() {
     <>
         <Header />
         <div id="content">
-            <Product/>
-            <Product/>
-            <Product/>
-            <Product/>
+            
         </div>
         <Footer />
     </>
