@@ -14,26 +14,32 @@ export default class UserController {
       res.status(400).json({ error: `Erro ao buscar usuários: ${err}` });
     }
   }
-  async create(req: Request, res: Response) {
+  async create(req: Request, res: Response) { 
     const { nome, email, senha, tipo } = req.body;
     const trx = await db.transaction();
-    console.log(nome, tipo, email, senha);
-    try {
-      const user = await trx("users").insert({
-        nome,
-        email,
-        senha,
-        tipo
-      });
-      console.log(user)
-      await trx.commit();
-      res.status(200).json(user);
-    } catch (err) {
-      await trx.rollback();
-      res.status(400).json({ error: `Erro ao cadastrar novo usuário: ${err}` });
+  
+    if (nome && email && senha && tipo) {
+      try {
+        const verifyUser = await trx("users").select("*").where({ email });
+  
+        if (verifyUser.length > 0) {
+          await trx.rollback();
+          return res.status(206).json({ error: "Email já cadastrado!" });
+        } else {
+          
+          const [userId] = await trx("users").insert({ nome, email, senha, tipo });
+          await trx.commit(); 
+  
+          return res.status(200).json({ id: userId, nome, email, tipo });
+        }
+      } catch (err) {
+        await trx.rollback(); // Reverte a transação em caso de erro
+        return res.status(400).json({ error: `Erro ao cadastrar novo usuário: ${err}` });
+      }
+    } else {
+      return res.status(400).json({ error: "Os dados são obrigatórios!" });
     }
   }
-
   async login(req: Request, res: Response) {
     const { email, senha } = req.query;
     try {

@@ -19,7 +19,7 @@
     background: var(--laranja);
 }
 
-.signUpForm form{
+.signUpForm nav{
     display: flex;
     flex-direction: column;
     padding: 2rem;
@@ -43,12 +43,13 @@
 .campoForm input {
     width: 80%;
     padding: 10px;
+    background: var(--branco2);
     border-radius: 5px;
     border: 1px solid var(--preto);
     font-size: 1.8rem;
 }
 
-form button {
+nav button {
     width: 100%;
     padding: 10px 0;
     margin-top: 5vh;
@@ -62,7 +63,7 @@ form button {
     transition: 0.2s;
 }
 
-form button:hover {
+nav button:hover {
     scale: 0.95;
     background: var(--roxo);
 }

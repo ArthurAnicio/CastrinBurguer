@@ -3,6 +3,8 @@ import Home from "./pages/inicio";
 import SignUp from "./pages/criarConta";
 import Cart from "./pages/carrinho";
 import Teste from "./pages/teste";
+import UsersList from "./pages/usersList";
+import PedidosList from "./pages/pedidoslist";
 
 function RoutesWeb() {
     return(
@@ -12,6 +14,8 @@ function RoutesWeb() {
                 <Route path="/criar-conta" Component={SignUp} />
                 <Route path="/carrinho" Component={Cart} />
                 <Route path="/teste" Component={Teste}/>
+                <Route path="/usuarios" Component={UsersList} />
+                <Route path="/pedidos" Component={PedidosList} />
             </Routes>
         </BrowserRouter>
     )

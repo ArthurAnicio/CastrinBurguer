@@ -3,12 +3,11 @@ import Header from '../../components/Header';
 import api from '../../api';
 import './styles.css';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
 
     const navigate = useNavigate();
-    const location = useLocation();
     const[nome, setNome]=useState('');
     const[email, setEmail]=useState('');
     const[senha, setSenha]=useState('');
@@ -18,15 +17,16 @@ function SignUp() {
         if(nome && email && senha){
             try{
                 const response = await api.post('/user', { nome, email, senha, tipo });
-                if(response.status === 201){
+                console.log(response)
+                if(response.status === 200){
                     alert('Conta criada com sucesso!');
                     navigate('/', { state: { user: response.data } });
                 } else {
-                    alert('Ocorreu um erro ao tentar cadastrar a conta!');
+                    alert(response.data.error);;
                 }
-            } catch(error){
-                console.error(error);
-                alert('Ocorreu um erro ao tentar cadastrar a conta!');
+            } catch(err){
+                alert('Erro ao cadastrar sua conta');
+                console.log(err);
             }
         } else {
             alert('Todos os campos são obrigatórios!');
@@ -39,7 +39,7 @@ function SignUp() {
         <div id="content">
             <div className="signUpForm">
                 <h2>Criar Conta</h2>
-                <form>
+                <nav>
                     <div className="campoForm">
                         <label>Nome:</label>
                         <input 
@@ -51,7 +51,7 @@ function SignUp() {
                     <div className="campoForm">
                         <label >Email:</label>
                         <input 
-                            type="email" 
+                            type="text" 
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -64,8 +64,8 @@ function SignUp() {
                             onChange={(e) => setSenha(e.target.value)} 
                         />
                     </div>
-                    <button type="submit" onClick={signUp}>Cadastrar</button>
-                </form>
+                    <button onClick={signUp}>Cadastrar</button>
+                </nav>
             </div>
         </div>
         <Footer />
