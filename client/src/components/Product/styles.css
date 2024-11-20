@@ -85,6 +85,7 @@
 .infoProduto section{
     display: flex;
     flex-direction: column;
+    align-items: start;
     margin-left: 20px;
 }
 
@@ -109,6 +110,7 @@
     font-size: 2rem;
     color: var(--preto);
     font-weight: 550;
+    margin-top: 10px;
 }
 
 .quantidadeProduto{
@@ -125,6 +127,7 @@
     font-size: 2rem;
     color: var(--preto);
     font-weight: 550;
+    margin-top: 10px;
 }
 
 .urlImagem{
@@ -138,10 +141,30 @@
     border: solid 1px var(--preto);
 }
 
+.categoriaCampo{
+    font-size: 2rem;
+    color: var(--preto);
+    font-weight: 550;
+    margin-top: 10px;
+}
+
+.selectCategoria{
+    
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 2rem;
+    color: var(--preto);
+    background: var(--branco);
+    padding: 0.3rem;
+    border-radius: 1rem;
+    border: solid 1px var(--preto);
+}
+
 .preco{
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .precoFalso{
@@ -149,7 +172,7 @@
     color: var(--vermelho);
     font-size: 2rem;
     font-weight: 700;
-    margin-top: 10px;
+    margin-left: 5px;
 }
 
 .precoCerto{
@@ -157,7 +180,6 @@
     color: var(--verde);
     font-size: 2.5rem;
     font-weight: 700;
-    margin-left: 10px;
     border: none;
     background: var(--branco);
 }
@@ -165,7 +187,9 @@
 .adicionar{
     width: 80px;
     height: 80px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 4rem;
     font-weight: 800;
     background: var(--verde3);

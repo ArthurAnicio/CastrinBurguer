@@ -12,7 +12,8 @@ interface ProdutoItem {
     descricao: string;
     preco: string;
     quantidade: number;
-    image: string;
+    categoria: string;
+    imagem: string;
 }
 
 function Home() {
@@ -23,7 +24,8 @@ function Home() {
         descricao: '',
         preco: '',
         quantidade: 0,
-        image: '',
+        categoria: '',
+        imagem: '',
     });
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
@@ -35,7 +37,7 @@ function Home() {
 
     useEffect(() => {
         if (user.id > 0) {
-            setAreAdm(user.tipo === 'admin');
+            setAreAdm(user.tipo === 'adm');
         } else {
             setAreAdm(false);
         }
@@ -72,7 +74,7 @@ function Home() {
             console.log('Produto adicionado:', response.data);
             setProdutos([...produtos, { ...newProduto, id: response.data.id }]);
             setProdutosFiltrados([...produtos, { ...newProduto, id: response.data.id }]);
-            setNewProduto({ nome: '', descricao: '', preco: '', quantidade: 0, image: '' });
+            setNewProduto({ nome: '', descricao: '', preco: '', quantidade: 0, categoria: '',imagem: '' });
             setIsAdding(false);
         } catch (error) {
             console.error('Erro ao adicionar produto:', error);
@@ -85,15 +87,7 @@ function Home() {
     }
 
     function filtar() {
-        const produtosFiltrados = produtos.filter((produto) => {
-            const preco = Number(produto.preco.replace(/\D/g, '')) || 0;
-            const fromValue = from ? Number(from.replace(/\D/g, '')) : 0;
-            const toValue = to ? Number(to.replace(/\D/g, '')) : Infinity;
-            return preco >= fromValue && preco <= toValue;
-        });
-        setProdutosFiltrados(produtosFiltrados);
-        setFrom('');
-        setTo('');
+        
     }
 
    
@@ -101,14 +95,15 @@ function Home() {
         <>
             <Header />
             <div id="content">
-                {
-                    <button onClick={() => setIsAdding(!isAdding)}>
+                {areAdm &&
+                    <button className='add' onClick={() => setIsAdding(!isAdding)}>
                         {isAdding ? 'Cancelar' : 'Adicionar Produto'}
                     </button>
-}
+                }
                
                 {isAdding && areAdm && (
-                    <div>
+                    <div className='newProductForm'>
+                        <h1>Novo Produto</h1>
                         <input
                             type="text"
                             placeholder="Nome"
@@ -135,21 +130,31 @@ function Home() {
                                 setNewProduto({ ...newProduto, quantidade: Number(e.target.value) })
                             }
                         />
+                        <select 
+                            value={newProduto.categoria}
+                            onChange={(e) => setNewProduto({...newProduto, categoria: e.target.value })}
+                        >
+                            <option value="bebida">Bebida</option>
+                            <option value="hamburguer">Hamburguer</option>
+                            <option value="sobremesa">Sobremesa</option>
+                            <option value="acompanhamento">Acompanhamento</option>
+                        </select>
                         <input
                             type="text"
                             placeholder="URL da imagem"
-                            value={newProduto.image}
-                            onChange={(e) => setNewProduto({ ...newProduto, image: e.target.value })}
+                            value={newProduto.imagem}
+                            onChange={(e) => setNewProduto({ ...newProduto, imagem: e.target.value })}
                         />
+                        <img src={newProduto.imagem} alt="" />
                         <button onClick={handleAddProduto}>Salvar Produto</button>
                     </div>
                 )}
-                <div>
+                <div className='cardapio'>
                     {produtosFiltrados.map((produto) => (
                         <Product
                             key={produto.id}
                             produto={produto}
-                            onDelete={areAdm ? handleDelete : () => {}}
+                            onDelete={handleDelete}
                         />
                     ))}
                 </div>

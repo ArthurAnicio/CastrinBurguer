@@ -10,7 +10,8 @@ interface ProdutoProps {
       descricao: string;
       preco: string;
       quantidade: number;
-      image: string;
+      categoria: string;
+      imagem: string;
     };
     onDelete: (id: number) => void;
   }
@@ -23,7 +24,8 @@ interface ProdutoProps {
     const [descricao, setDescricao] = useState(produto.descricao);
     const [preco, setPreco] = useState(produto.preco);
     const [quantidade, setQuantidade] = useState(produto.quantidade);
-    const [image, setImage] = useState(produto.image);
+    const [categoria, setCategoria] = useState(produto.categoria);
+    const [imagem, setImagem] = useState(produto.imagem);
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
 
     useEffect(() => {
@@ -39,7 +41,7 @@ interface ProdutoProps {
     return (
         <div onClick={() => (vendoDetalhes? nada: setVendoDetalhes(true)) } className={vendoDetalhes ? 'produtoGrandao' : 'produtoNormal'}>
             <div className="img">
-                <img className='imagem' src={image} alt="Imagem do produto" />
+                <img className='imagem' src={imagem} alt="Imagem do produto" />
                 {vendoDetalhes ? <i onClick={()=>setVendoDetalhes(false)} className="fa-solid fa-x" id='sair'></i>: null}
             </div>
             {vendoDetalhes ? (
@@ -78,9 +80,22 @@ interface ProdutoProps {
                                             <input
                                                 type='url'
                                                 className='urlImagem'
-                                                value={image}
-                                                 onChange={(e)=>setImage(e.target.value)}
+                                                value={imagem}
+                                                 onChange={(e)=>setImagem(e.target.value)}
                                                 disabled={!isEditing} />
+                                        </div>
+                                        <div className="categoriaCampo">
+                                            <label>Categoria:</label>
+                                            <select
+                                                className='selectCategoria' 
+                                                value={produto.categoria} 
+                                                onChange={(e) => setCategoria(e.target.value)}
+                                            >
+                                                 <option value="bebida">Bebida</option>
+                                                 <option value="hamburguer">Hamburguer</option>
+                                                 <option value="sobremesa">Sobremesa</option>
+                                                 <option value="acompanhamento">Acompanhamento</option>
+                                            </select>
                                         </div>
                                     </>
                                 }
@@ -88,9 +103,6 @@ interface ProdutoProps {
                             </section>
                             <section>
                                 <div className="preco">
-                                    <span className='precoFalso'>
-                                        R$ 100,00
-                                    </span>
                                     <input
                                         type='text'
                                         className="precoCerto"
@@ -98,6 +110,10 @@ interface ProdutoProps {
                                         onChange={(e)=>setPreco(e.target.value)}
                                         disabled={!isEditing}
                                     />
+                                    <span className='precoFalso'>
+                                        R$ 100,00
+                                    </span>
+                                    
                                     
                                 </div>
                                 <button className='adicionar'>
@@ -127,7 +143,7 @@ interface ProdutoProps {
                     </div>
                 </>
             ) : (
-                <h1>Produto</h1>
+                <h1>{produto.nome}</h1>
             )}
             
         </div>

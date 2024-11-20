@@ -5,9 +5,9 @@ export default class ProdutoController{
     async index(req: Request, res: Response){
         try{
             const produtos = await db.select('*').from('produtos');
-            res.json(produtos);
+            return res.json(produtos);
         }catch(err){
-            res.status(400).json({error: `Erro ao buscar produtos: ${err}`});
+            return res.status(400).json({error: `Erro ao buscar produtos: ${err}`});
         }
     }
     async getById(req: Request, res: Response){
@@ -19,45 +19,45 @@ export default class ProdutoController{
                 if(!produto.length){
                     return res.status(404).json({error: 'Produto não encontrado!'});
                 }
-                res.json(produto[0]);
+                return res.json(produto[0]);
             }catch(err){
-                res.status(400).json({error: `Erro ao buscar produto: ${err}`});
+                return res.status(400).json({error: `Erro ao buscar produto: ${err}`});
             }
         }else{
-            res.status(400).json({error: 'ID do produto não fornecido!'});
+            return res.status(400).json({error: 'ID do produto não fornecido!'});
         }
     }
     async create(req: Request, res: Response){
-        const {nome, descricao, preco, quantidade, image} = req.body
+        const {nome, descricao, preco, quantidade, categoria, imagem} = req.body
         const trx = await db.transaction();
 
-        if(!nome ||!descricao ||!preco ||!quantidade ||!image){
+        if(!nome ||!descricao ||!preco ||!quantidade ||!categoria ||!imagem){
             return res.status(400).json({error: 'Todos os dados são obrigatórios!'});
         }else{
             try{
-                await trx('produtos').insert({nome, descricao, quantidade, preco, image});
+                await trx('produtos').insert({nome, descricao, quantidade, preco, categoria, imagem});
                 await trx.commit();
-                res.status(200).json({message: 'Produto cadastrado com sucesso!'});
+                return res.status(200).json({message: 'Produto cadastrado com sucesso!'});
             }catch(err){
-                res.status(400).json({error: `Erro ao cadastrar produto: ${err}`});
+                return res.status(400).json({error: `Erro ao cadastrar produto: ${err}`});
             }
         }
     }
     async update(req: Request, res: Response){
-        const {id, nome, descricao, quantidade, preco, image} = req.body
+        const {id, nome, descricao, quantidade, preco, categoria, imagem} = req.body
         const trx = await db.transaction();
 
-        if(!nome ||!descricao ||!preco ||!quantidade ||!image){
+        if(!nome ||!descricao ||!preco ||!quantidade ||!categoria ||!imagem){
             return res.status(400).json({error: 'Todos os dados são obrigatórios!'});
         }else{
             try{
                 await trx('produtos')
-                .update({nome, descricao, quantidade, preco, image})
+                .update({nome, descricao, quantidade, preco, categoria, imagem})
                 .where('id', id);
                 await trx.commit();
-                res.status(200).json({message: 'Produto atualizado com sucesso!'});
+                return res.status(200).json({message: 'Produto atualizado com sucesso!'});
             }catch(err){
-                res.status(400).json({error: `Erro ao atualizar produto: ${err}`});
+               return res.status(400).json({error: `Erro ao atualizar produto: ${err}`});
             }
         }
     }
@@ -73,9 +73,9 @@ export default class ProdutoController{
                 .delete()
                 .where('id', id);
                 await trx.commit();
-                res.status(200).json({message: 'Produto excluído com sucesso!'});
+                return res.status(200).json({message: 'Produto excluído com sucesso!'});
             }catch(err){
-                res.status(400).json({error: `Erro ao excluir produto: ${err}`});
+                return res.status(400).json({error: `Erro ao excluir produto: ${err}`});
             }
         }
     }

@@ -1,13 +1,57 @@
-button {
-    display: block; /* Garante que seja visível */
-    margin: 10px auto; /* Centraliza no eixo horizontal */
-    padding: 10px 20px; /* Ajusta o tamanho interno */
-    background-color: #4CAF50; /* Cor de fundo */
-    color: white; /* Cor do texto */
-    border: none; /* Remove bordas */
-    border-radius: 5px; /* Bordas arredondadas */
-    cursor: pointer; /* Cursor de botão */
+.add{
+    width: 350px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: var(--azul);
+    color: var(--branco);
+    font-size: 3rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: 0.2s;
 }
-button:hover {
-    background-color: #45a049; /* Efeito de hover */
+
+.add:hover{
+    background: var(--azul2);
+    scale: 0.95;
+}
+
+.newProductForm{
+    width: 360px ;
+    padding: 1rem;
+    margin: 2rem auto;
+    background: var(--branco2);
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.newProductForm h1{
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--preto);
+}
+
+.newProductForm input,
+.newProductForm select{
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: solid 1px var(--roxo);
+    border-radius: 2rem;
+    font-size: 2rem;
+    color: var(--preto);
+    background: var(--branco);
+    transition: 0.2s;
+}
+
+.cardapio{
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }

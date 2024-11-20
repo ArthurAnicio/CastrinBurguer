@@ -3,6 +3,7 @@
     --branco2: #fdfafc;
     --preto: #0b0224;
     --cinza: #b09abe;
+    --cinza2: #7d7185;
     --vermelho: #bb2035;
     --vermelho2: #811c2a;
     --laranja: #cf432a;
@@ -39,4 +40,5 @@ body{
     width: 100%;
     min-height: 80vh;
     padding: 2rem;
+    text-align: center;
 }

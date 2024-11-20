@@ -8,7 +8,8 @@ export async function up(knex: Knex){
             table.string('descricao').notNullable().unique();
             table.string('preco').notNullable();
             table.integer('quantidade').notNullable();
-            table.string('image').notNullable
+            table.string('categoria').notNullable();
+            table.string('imagem').notNullable;
         })  
     )
 }
