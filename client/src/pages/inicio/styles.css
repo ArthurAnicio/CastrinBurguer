@@ -1,0 +1,13 @@
+button {
+    display: block; /* Garante que seja visível */
+    margin: 10px auto; /* Centraliza no eixo horizontal */
+    padding: 10px 20px; /* Ajusta o tamanho interno */
+    background-color: #4CAF50; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    border: none; /* Remove bordas */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de botão */
+}
+button:hover {
+    background-color: #45a049; /* Efeito de hover */
+}
