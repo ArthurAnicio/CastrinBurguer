@@ -1,3 +1,48 @@
+.filtro{
+    width: 1100px;
+    padding: 1rem;
+    margin: 0 auto;
+    background: var(--cinza2);
+    border-radius: 2rem;
+}
+
+.filtroBtn{
+    margin: 1rem;
+    padding: 2rem;
+    background: var(--laranja);
+    border: none;
+    border-radius: 2rem;
+    color: var(--amarelo3);
+    font-weight: 700;
+    font-size: 2.4rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filtroBtn:hover{
+    background: var(--laranja2);
+    scale: 0.95;
+}
+
+.tirarFiltro{
+    width: 80px;
+    margin: 1rem;
+    padding: 2rem;
+    background: var(--vermelho);
+    border: none;
+    border-radius: 2rem;
+    color: var(--branco);
+    font-weight: 700;
+    font-size: 3rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tirarFiltro:hover{
+    background: var(--vermelho2);
+    scale: 0.95;
+}
+
 .add{
     width: 350px;
     margin: 2rem auto;
@@ -18,7 +63,7 @@
 }
 
 .newProductForm{
-    width: 360px ;
+    width: 500px ;
     padding: 1rem;
     margin: 2rem auto;
     background: var(--branco2);
@@ -48,8 +93,41 @@
     transition: 0.2s;
 }
 
+.newProductForm input:focus,
+.newProductForm select:focus{
+    border: solid 1px var(--roxo2);
+    outline: none;
+}
+
+.newProductForm img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    background-color: var(--preto);
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.newProductForm button{
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem 2rem;
+    background: var(--roxo);
+    color: var(--branco);
+    font-size: 2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.newProductForm button:hover{
+    background: var(--roxo2);
+    scale: 0.95;
+}
+
 .cardapio{
-    background: rgba(0,0,0,0.5);
     width: 100%;
     padding: 2rem;
     display: grid;
