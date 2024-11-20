@@ -14,8 +14,9 @@ interface ProdutoProps {
       imagem: string;
     };
     onDelete: (id: number) => void;
-  }
-  const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
+}
+
+const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
     const location = useLocation();
     const [vendoDetalhes, setVendoDetalhes] = useState(false);
     const [adm, setAdm] = useState(false);
@@ -35,6 +36,49 @@ interface ProdutoProps {
             setAdm(false);
         }
     }, [user]);
+
+    async function editarProduto() {
+        try {
+            const atualizadoProduto = {
+                id: produto.id,
+                nome,
+                descricao,
+                preco,
+                quantidade,
+                categoria,
+                imagem,
+            };
+            await api.put(`/produto/${produto.id}`, atualizadoProduto);
+            setIsEditing(false); 
+        } catch (error) {
+            console.error('Erro ao editar o produto:', error);
+        }
+    }
+
+    async function excluirProduto() {
+        try {
+            await api.delete(`/produto/${produto.id}`); 
+            onDelete(produto.id);
+        } catch (error) {
+            console.error('Erro ao excluir o produto:', error);
+        }
+    }
+
+
+    function formatarPreco(valor: string) {
+        const valorLimpo = valor.replace(/\D/g, '');
+        return (Number(valorLimpo) / 100).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        });
+    }
+
+    function handlePrecoChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const precoFormatado = formatarPreco(e.target.value);
+        setPreco(  precoFormatado );
+    }
+
+    
 
     function nada(){}
 
@@ -60,7 +104,7 @@ interface ProdutoProps {
                                     type='text'
                                     className='descricaoProduto'
                                     value={descricao}
-                                     onChange={(e)=>setDescricao(e.target.value)}
+                                    onChange={(e)=>setDescricao(e.target.value)}
                                     disabled={!isEditing}
                                 />
                                 {adm && 
@@ -71,7 +115,7 @@ interface ProdutoProps {
                                                 type='number'
                                                 className='quantidadeProduto'
                                                 value={quantidade}
-                                                 onChange={(e)=>setQuantidade(Number(e.target.value))}
+                                                onChange={(e)=>setQuantidade(Number(e.target.value))}
                                                 disabled={!isEditing} 
                                             />
                                         </div>
@@ -81,8 +125,9 @@ interface ProdutoProps {
                                                 type='url'
                                                 className='urlImagem'
                                                 value={imagem}
-                                                 onChange={(e)=>setImagem(e.target.value)}
-                                                disabled={!isEditing} />
+                                                onChange={(e)=>setImagem(e.target.value)}
+                                                disabled={!isEditing} 
+                                            />
                                         </div>
                                         <div className="categoriaCampo">
                                             <label>Categoria:</label>
@@ -99,7 +144,6 @@ interface ProdutoProps {
                                         </div>
                                     </>
                                 }
-                                
                             </section>
                             <section>
                                 <div className="preco">
@@ -107,20 +151,17 @@ interface ProdutoProps {
                                         type='text'
                                         className="precoCerto"
                                         value={preco}
-                                        onChange={(e)=>setPreco(e.target.value)}
+                                        onChange={handlePrecoChange}
+
                                         disabled={!isEditing}
                                     />
                                     <span className='precoFalso'>
                                         R$ 100,00
                                     </span>
-                                    
-                                    
                                 </div>
                                 <button className='adicionar'>
                                     <i className="fa-solid fa-cart-plus"></i>
                                 </button>    
-                                    
-                                
                             </section>
                         </div>
                         {adm && 
@@ -130,11 +171,11 @@ interface ProdutoProps {
                                         {isEditing ? 'Cancelar' : 'Editar'}
                                     </button>
                                     {isEditing &&
-                                        <button className="salvar">
+                                        <button onClick={editarProduto} className="salvar">
                                             Salvar
                                         </button>
                                     }
-                                    <button className="excluir">
+                                    <button onClick={excluirProduto} className="excluir">
                                         Excluir
                                     </button>
                                 </div>
@@ -145,7 +186,6 @@ interface ProdutoProps {
             ) : (
                 <h1>{produto.nome}</h1>
             )}
-            
         </div>
     );
 }

@@ -45,8 +45,8 @@ export default class ProdutoController{
             }
         }
     }
-    async update(req: Request, res: Response){
-        const {id, nome, descricao, quantidade, preco, categoria, imagem} = req.body
+    async update(req: Request, res: Response) {
+        const { id, nome, descricao, quantidade, preco, categoria, imagem } = req.body;
         const trx = await db.transaction();
 
         if(!nome ||!descricao ||!preco ||!quantidade ||!categoria ||!imagem){
@@ -62,10 +62,20 @@ export default class ProdutoController{
                 await trx.rollback();
                return res.status(400).json({error: `Erro ao atualizar produto: ${err}`});
             }
+    
+            await trx('produtos')
+                .update({ nome, descricao, quantidade, preco: precoNormalizado, categoria, imagem })
+                .where('id', id);
+    
+            await trx.commit();
+            return res.status(200).json({ message: 'Produto atualizado com sucesso!' });
+        } catch (err) {
+            await trx.rollback();
+            return res.status(400).json({ error: `Erro ao atualizar produto: ${err}` });
         }
     }
-    async delete(req: Request, res: Response){
-        const {id} = req.query
+    async delete(req: Request, res: Response) {
+        const { id } = req.query;
         const trx = await db.transaction();
 
         if(!id){
@@ -81,6 +91,13 @@ export default class ProdutoController{
                 await trx.rollback();
                 return res.status(400).json({error: `Erro ao excluir produto: ${err}`});
             }
+    
+            await trx('produtos').delete().where('id', id);
+            await trx.commit();
+            return res.status(200).json({ message: 'Produto excluído com sucesso!' });
+        } catch (err) {
+            await trx.rollback();
+            return res.status(400).json({ error: `Erro ao excluir produto: ${err}` });
         }
     }
 }
