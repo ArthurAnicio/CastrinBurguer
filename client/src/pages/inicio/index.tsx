@@ -24,11 +24,9 @@ function Home() {
         descricao: '',
         preco: '',
         quantidade: 0,
-        categoria: '',
+        categoria: 'bebida',
         imagem: '',
     });
-    const [from, setFrom] = useState('');
-    const [to, setTo] = useState('');
     const [produtosFiltrados, setProdutosFiltrados] = useState<ProdutoItem[]>([]);
     const [areAdm, setAreAdm] = useState(false);
 
@@ -69,15 +67,19 @@ function Home() {
     }
 
     async function handleAddProduto() {
-        try {
-            const response = await api.post('/produto', newProduto);
-            console.log('Produto adicionado:', response.data);
-            setProdutos([...produtos, { ...newProduto, id: response.data.id }]);
-            setProdutosFiltrados([...produtos, { ...newProduto, id: response.data.id }]);
-            setNewProduto({ nome: '', descricao: '', preco: '', quantidade: 0, categoria: '',imagem: '' });
-            setIsAdding(false);
-        } catch (error) {
-            console.error('Erro ao adicionar produto:', error);
+        if(newProduto.nome && newProduto.descricao && newProduto.preco && newProduto.quantidade > 0 && newProduto.categoria && newProduto.imagem) {    
+            try {
+                const response = await api.post('/produto', newProduto);
+                console.log('Produto adicionado:', response.data);
+                setProdutos([...produtos, { ...newProduto, id: response.data.id }]);
+                setProdutosFiltrados([...produtos, { ...newProduto, id: response.data.id }]);
+                setNewProduto({ nome: '', descricao: '', preco: '', quantidade: 0, categoria: '',imagem: '' });
+                setIsAdding(false);
+            } catch (error) {
+                console.error('Erro ao adicionar produto:', error);
+            }
+        }else {
+            alert('Todos os dados são obrigatórios!');
         }
     }
 
@@ -95,6 +97,16 @@ function Home() {
         <>
             <Header />
             <div id="content">
+                
+                <div className='cardapio'>
+                    {produtosFiltrados.map((produto) => (
+                        <Product
+                            key={produto.id}
+                            produto={produto}
+                            onDelete={handleDelete}
+                        />
+                    ))}
+                </div>
                 {areAdm &&
                     <button className='add' onClick={() => setIsAdding(!isAdding)}>
                         {isAdding ? 'Cancelar' : 'Adicionar Produto'}
@@ -149,15 +161,6 @@ function Home() {
                         <button onClick={handleAddProduto}>Salvar Produto</button>
                     </div>
                 )}
-                <div className='cardapio'>
-                    {produtosFiltrados.map((produto) => (
-                        <Product
-                            key={produto.id}
-                            produto={produto}
-                            onDelete={handleDelete}
-                        />
-                    ))}
-                </div>
             </div>
             <Footer />
         </>

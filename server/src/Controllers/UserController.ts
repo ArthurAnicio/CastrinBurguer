@@ -33,7 +33,7 @@ export default class UserController {
           return res.status(200).json({ id: userId, nome, email, tipo });
         }
       } catch (err) {
-        await trx.rollback(); // Reverte a transação em caso de erro
+        await trx.rollback(); 
         return res.status(400).json({ error: `Erro ao cadastrar novo usuário: ${err}` });
       }
     } else {
@@ -47,10 +47,10 @@ export default class UserController {
       if (!user || user.senha !== senha) {
         return res.status(401).json({ error: "Email ou senha inválidos" });
       }else {
-        res.status(200).json(user)
+        return res.status(200).json(user)
       }
     } catch (err) {
-      res.status(400).json({ error: `Erro ao buscar usuário: ${err}` });
+      return res.status(400).json({ error: `Erro ao buscar usuário: ${err}` });
     }
   }
 
