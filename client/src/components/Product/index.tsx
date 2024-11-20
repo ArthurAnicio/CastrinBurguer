@@ -28,6 +28,7 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
     const [categoria, setCategoria] = useState(produto.categoria);
     const [imagem, setImagem] = useState(produto.imagem);
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
+    console.log(produto.id);
 
     useEffect(() => {
         if (user.id > 0) {
@@ -48,7 +49,7 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
                 categoria,
                 imagem,
             };
-            await api.put(`/produto/${produto.id}`, atualizadoProduto);
+            await api.put(`/produto`, atualizadoProduto);
             setIsEditing(false); 
         } catch (error) {
             console.error('Erro ao editar o produto:', error);
@@ -57,7 +58,8 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
 
     async function excluirProduto() {
         try {
-            await api.delete(`/produto/${produto.id}`); 
+            console.log('Id:'+produto.id);
+            await api.delete(`/produto?id=${produto.id}`); 
             onDelete(produto.id);
         } catch (error) {
             console.error('Erro ao excluir o produto:', error);
@@ -78,7 +80,12 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
         setPreco(  precoFormatado );
     }
 
-    
+    function calcularPrecoFalso(preco: string) {
+        const valorNumerico = parseFloat(preco.replace(/[^\d,]/g, '').replace(',', '.')); 
+        if (isNaN(valorNumerico)) return 'R$ 0,00'; 
+        const precoFalso = valorNumerico * 1.5; 
+        return precoFalso.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
 
     function nada(){}
 
@@ -156,7 +163,7 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
                                         disabled={!isEditing}
                                     />
                                     <span className='precoFalso'>
-                                        R$ 100,00
+                                        {calcularPrecoFalso(preco)}
                                     </span>
                                 </div>
                                 <button className='adicionar'>
