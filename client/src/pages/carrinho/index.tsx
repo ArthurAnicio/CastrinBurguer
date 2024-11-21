@@ -20,7 +20,9 @@ function Cart() {
     const location = useLocation();
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
     var produtos = location.state?.produtos || [];
+    const user_id = user.id;
     const [preco, setPreco] = useState('');
+    const status= 'Aguardando pagamento';
     const [produtosArray, setProdutosArray] = useState<ProdutoItem[]>([]);
 
     useEffect(() => {
@@ -57,8 +59,24 @@ function Cart() {
         }
     }
 
-    function criarPedido(){
-        
+    async function criarPedido(){
+        try{
+            const response = await api.post('/pedido', {
+                user_id,
+                produtos: JSON.stringify(produtos),
+                preco,
+                status
+            });
+            if(response.status === 201){
+                alert('Pedido criado com sucesso!');
+                navigate('/', { state: { user, carrinho: [] } });
+            } else {
+                alert(response.data.error);
+            }
+        }catch(error){
+            console.error("Erro ao tentar cadastrar o pedido:", error);
+            alert('Erro ao tentar cadastrar o pedido.');
+        }
     }
 
     function formatarPreco(valor: number) {
@@ -102,6 +120,20 @@ function Cart() {
                     </div>
                     <div className="precoFinal">
                         Preço Final: {preco}
+                    </div>
+                    <div className="opcoes">
+                        <button 
+                            id="finalizar"
+                            onClick={criarPedido}
+                        >
+                            Finalizar Compra
+                        </button>
+                        <button 
+                            id="cancelar"
+                            onClick={() => navigate('/', { state: { user, carrinho: [] } })}
+                        >
+                            Cancelar Compra
+                        </button>
                     </div>
                 </div>
             </div>

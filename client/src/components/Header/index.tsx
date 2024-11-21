@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import './styles.css'
-import { useLocation, useNavigate } from 'react-router-dom';
-import api from '../../api';
+import { useState, useEffect } from 'react';//-
+import './styles.css'//-
+import { useLocation, useNavigate } from 'react-router-dom';//-
+import api from '../../api';//
 
 function Header() {
   const [isLogging, setIsLogging] = useState(false);
+  const [islogged, setIsLogged] = useState(false);
   const [tipo, setTipo] = useState('user');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -15,6 +16,7 @@ function Header() {
   useEffect(() => {
     if (user.id > 0) {
       setTipo(user.tipo);
+      setIsLogged(true);
     } else {
       setTipo('user');
     }
@@ -25,7 +27,7 @@ function Header() {
       try {
         const response = await api.get(`/user?email=${email}&senha=${senha}`);
         if (response.status === 200) {
-          navigate('/', { state: { user: response.data } });
+          navigate('/', { state: { user: response.data, islogged } });
           setIsLogging(false);
         } else {
           alert('Email ou senha inválidos!');
@@ -58,31 +60,49 @@ function Header() {
       {isLogging && (
         <div className="dropdown">
           <h1>Bem Vindo</h1>
-          <div className="campoform">
-            <label>Login:</label>
-            <input
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="campoform">
-            <label>Senha:</label>
-            <input
-              type="password"
-              placeholder="Senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-            />
-          </div>
-          <span className='fakelink'>
-            Não tem uma conta?
-            <span onClick={() => navigate('/criar-conta')}>
-              Crie uma
-            </span>
-          </span>
-          <button onClick={login}>Login</button>
+          {islogged ? (
+            <>
+              <h1>{user.nome}</h1>
+              <button 
+                className='deslogar'
+                onClick={() => {
+                  setIsLogged(false);
+                  navigate('/');
+                }}
+              >
+                Deslogar
+                <i className="fa-solid fa-sign-out-alt"></i>
+              </button>
+            </>
+          ) : (
+            <div>
+              <div className="campoform">
+                <label>Login:</label>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="campoform">
+                <label>Senha:</label>
+                <input
+                  type="password"
+                  placeholder="Senha"
+                  value={senha}
+                  onChange={(e) => setSenha(e.target.value)}
+                />
+              </div>
+              <span className='fakelink'>
+                Não tem uma conta?
+                <span onClick={() => navigate('/criar-conta')}>
+                  Crie uma
+                </span>
+              </span>
+              <button onClick={login}>Login</button>
+            </div>
+          )}
         </div>
       )}
     </header>

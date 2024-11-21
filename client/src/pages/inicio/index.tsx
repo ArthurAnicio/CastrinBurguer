@@ -33,10 +33,12 @@ function Home() {
     const location = useLocation();
     const carrinho = location.state?.carrinho || [];
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
+    const[isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         if (user.id > 0) {
             setAreAdm(user.tipo === 'adm');
+            setIsLoggedIn(true);
         } else {
             setAreAdm(false);
         }
@@ -103,7 +105,7 @@ function Home() {
         <>
             <Header />
             <div id="content">
-                {carrinho.length > 0 &&
+                {carrinho.length > 0 && isLoggedIn ?
                     <div 
                         className="carrinhoPopUp"
                         onClick={() => navigate('/carrinho', {state : {user: user, produtos: carrinho}}) }
@@ -113,7 +115,11 @@ function Home() {
                             {carrinho.length}
                         </span>
                     </div>
+                    : null
                 }
+                <div className="historicoDeCompraPopUp">
+                    <i className="fa-solid fa-history"></i>
+                </div>
                 <div className="filtro">
                     <button 
                         className="filtroBtn" 

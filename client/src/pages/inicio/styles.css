@@ -32,6 +32,28 @@
     background: var(--vermelho);
     border-radius: 50%;
     box-shadow: 0 0 5px var(--branco);
+    transition: 0.2s;
+}
+
+.historicoDeCompraPopUp{
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    top: 250px;
+    background: var(--laranja);
+    border-radius: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--branco);
+    font-size: 3.5rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.historicoDeCompraPopUp:hover{
+    background: var(--laranja2);
+    scale: 0.95;
 }
 
 .filtro{

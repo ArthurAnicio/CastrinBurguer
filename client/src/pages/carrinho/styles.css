@@ -1,7 +1,7 @@
 .pedido{
     width: 600px;
     margin: 2rem auto;
-    padding: 1rem 3rem;
+    padding: 2rem 3rem;
     background: var(--branco);
     border-radius: 2rem;
     display: flex;
@@ -11,7 +11,7 @@
 }
 
 .pedido h1{
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 800;
     margin-bottom: 2rem;
 }
@@ -71,7 +71,6 @@
     font-weight: 700;
     border: none;
     border-radius: 2rem;
-    box-shadow: 5px 5px 5px var(--preto);
     cursor: pointer;
     transition: 0.2s;
 }
@@ -83,9 +82,56 @@
 
 .precoFinal{
     width: 100%;
-    font-size: 2.4rem;
+    font-size: 3rem;
     font-weight: 800;
-    margin-top: 2rem;
+    margin: 3rem 0;
     text-align: end;
-    padding: 0 1.5rem;
+    padding: 2rem 1.5rem;
+    border-top: solid 1px var(--rosa);
+    border-bottom: solid 1px var(--rosa);
+}
+
+.opcoes{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+#finalizar{
+    width: 48%;
+    padding: 2rem 1rem;
+    background: var(--verde);
+    color: var(--branco);
+    box-shadow: 5px 5px 5px var(--preto);
+    font-size: 3rem;
+    font-weight: 750;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#finalizar:hover{
+    background: var(--verde2);
+    scale: 0.95;
+}
+
+#cancelar{
+    width: 48%;
+    padding: 2rem 1rem;
+    background: var(--vermelho);
+    color: var(--branco);
+    box-shadow: 5px 5px 5px var(--preto);
+    font-size: 3rem;
+    font-weight: 750;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#cancelar:hover{
+    background: var(--vermelho2);
+    scale: 0.95;
 }
