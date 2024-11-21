@@ -1,6 +1,7 @@
 :root{
     --branco: #fff6fb;
     --branco2: #fdfafc;
+    --branco3: #ebe3e7;
     --preto: #0b0224;
     --cinza: #b09abe;
     --cinza2: #7d7185;
@@ -20,6 +21,14 @@
     --verde: #27eb68;
     --verde2: #20aa50;
     --verde3: #2ee76b;
+
+    --teste: rgba(0,0,0,0.5);
+    --teste2: rgba(0,0,255,0.5);
+    --teste3: rgba(0,255,0,0.5);
+    --teste4: rgba(255,0,0,0.5);
+    --teste5: rgba(255,255,0,0.5);
+    --teste6: rgba(0,255,255,0.5);
+    --teste7: rgba(255, 0, 255, 0.5);
 
     font-family: Poppins;
     font-size: 60%;

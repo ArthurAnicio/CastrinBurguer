@@ -2,7 +2,7 @@ import './styles.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Product from '../../components/Product';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from '../../api';
 
@@ -29,8 +29,9 @@ function Home() {
     });
     const [produtosFiltrados, setProdutosFiltrados] = useState<ProdutoItem[]>([]);
     const [areAdm, setAreAdm] = useState(false);
-
+    const navigate = useNavigate();
     const location = useLocation();
+    const carrinho = location.state?.carrinho || [];
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
 
     useEffect(() => {
@@ -98,11 +99,21 @@ function Home() {
         setProdutosFiltrados(produtos);
     }
 
-   
     return (
         <>
             <Header />
             <div id="content">
+                {carrinho.length > 0 &&
+                    <div 
+                        className="carrinhoPopUp"
+                        onClick={() => navigate('/carrinho', {state : {user: user, produtos: carrinho}}) }
+                    >
+                        <i className="fa-solid fa-cart-shopping"></i>
+                        <span>
+                            {carrinho.length}
+                        </span>
+                    </div>
+                }
                 <div className="filtro">
                     <button 
                         className="filtroBtn" 

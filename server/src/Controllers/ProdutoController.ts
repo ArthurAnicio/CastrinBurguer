@@ -19,7 +19,7 @@ export default class ProdutoController{
                 if(!produto.length){
                     return res.status(404).json({error: 'Produto não encontrado!'});
                 }
-                return res.json(produto[0]);
+                return res.status(200).json(produto[0]);
             }catch(err){
                 return res.status(400).json({error: `Erro ao buscar produto: ${err}`});
             }

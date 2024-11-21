@@ -1,7 +1,7 @@
 import './styles.css';
 import api from '../../api';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface ProdutoProps {
     produto: {
@@ -18,6 +18,7 @@ interface ProdutoProps {
 
 const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [vendoDetalhes, setVendoDetalhes] = useState(false);
     const [adm, setAdm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -27,6 +28,7 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
     const [quantidade, setQuantidade] = useState(produto.quantidade);
     const [categoria, setCategoria] = useState(produto.categoria);
     const [imagem, setImagem] = useState(produto.imagem);
+    const carrinho = location.state?.carrinho || [];
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
     console.log(produto.id);
 
@@ -58,7 +60,6 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
 
     async function excluirProduto() {
         try {
-            console.log('Id:'+produto.id);
             await api.delete(`/produto?id=${produto.id}`); 
             onDelete(produto.id);
         } catch (error) {
@@ -87,10 +88,14 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
         return precoFalso.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
-    function nada(){}
+    function adicionarAoCarrionho(){
+        carrinho.push(produto.id);
+        setVendoDetalhes(false);
+        navigate('/', { state: { carrinho, user } });
+    }
 
     return (
-        <div onClick={() => (vendoDetalhes? nada: setVendoDetalhes(true)) } className={vendoDetalhes ? 'produtoGrandao' : 'produtoNormal'}>
+        <div onClick={() => (vendoDetalhes? null : setVendoDetalhes(true)) } className={vendoDetalhes ? 'produtoGrandao' : 'produtoNormal'}>
             <div className="img">
                 <img className='imagem' src={imagem} alt="Imagem do produto" />
                 {vendoDetalhes ? <i onClick={()=>setVendoDetalhes(false)} className="fa-solid fa-x" id='sair'></i>: null}
@@ -166,7 +171,7 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
                                         {calcularPrecoFalso(preco)}
                                     </span>
                                 </div>
-                                <button className='adicionar'>
+                                <button className='adicionar' onClick={adicionarAoCarrionho}>
                                     <i className="fa-solid fa-cart-plus"></i>
                                 </button>    
                             </section>

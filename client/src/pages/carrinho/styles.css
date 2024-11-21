@@ -1,0 +1,91 @@
+.pedido{
+    width: 600px;
+    margin: 2rem auto;
+    padding: 1rem 3rem;
+    background: var(--branco);
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    color: var(--preto);
+}
+
+.pedido h1{
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+}
+
+.pedido h2{
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.itens{
+    width: 100%;
+}
+
+.produtoItem{
+    width: 100%;
+    display: flex;
+    margin: 1.4rem 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: solid 1px var(--cinza);
+    background: var(--branco3);
+    border-radius: 1rem;
+    box-shadow: 5px 5px 5px var(--rosa);
+}
+
+.produtoItem img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 2rem;
+}
+
+.produtoItem label{
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.produtoItem i{
+    font-size: 3rem;
+    color: var(--vermelho);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.produtoItem i:hover{
+    color: var(--vermelho2);
+}
+
+.retornar{
+    width: 100%;
+    padding: 2rem;
+    background: var(--azul);
+    color: var(--branco);
+    font-size: 3rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 2rem;
+    box-shadow: 5px 5px 5px var(--preto);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.retornar:hover{
+    background: var(--azul2);
+    scale: 0.95;
+}
+
+.precoFinal{
+    width: 100%;
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-top: 2rem;
+    text-align: end;
+    padding: 0 1.5rem;
+}

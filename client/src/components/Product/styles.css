@@ -35,6 +35,7 @@
     width: 100%;
     height: 210px;
     background: var(--preto);
+    object-fit: cover;
 }
 
 .produtoGrandao .imagem{
