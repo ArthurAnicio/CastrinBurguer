@@ -22,6 +22,7 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
     const [vendoDetalhes, setVendoDetalhes] = useState(false);
     const [adm, setAdm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [isInavalible, setIsInavalible] = useState(false);
     const [nome, setNome] = useState(produto.nome);
     const [descricao, setDescricao] = useState(produto.descricao);
     const [preco, setPreco] = useState(produto.preco);
@@ -30,13 +31,15 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
     const [imagem, setImagem] = useState(produto.imagem);
     const carrinho = location.state?.carrinho || [];
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
-    console.log(produto.id);
 
     useEffect(() => {
         if (user.id > 0) {
             setAdm(user.tipo === 'adm');
         } else {
             setAdm(false);
+        }
+        if(produto.quantidade <= 0) {
+            setIsInavalible(true);
         }
     }, [user]);
 
@@ -95,11 +98,21 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
     }
 
     return (
-        <div onClick={() => (vendoDetalhes? null : setVendoDetalhes(true)) } className={vendoDetalhes ? 'produtoGrandao' : 'produtoNormal'}>
+        <div 
+            onClick={() => isInavalible && !adm ?  null: (vendoDetalhes ? null : setVendoDetalhes(true))}
+            className={vendoDetalhes ? 'produtoGrandao' : 'produtoNormal'}
+        >
             <div className="img">
                 <img className='imagem' src={imagem} alt="Imagem do produto" />
                 {vendoDetalhes ? <i onClick={()=>setVendoDetalhes(false)} className="fa-solid fa-x" id='sair'></i>: null}
             </div>
+            {isInavalible && !vendoDetalhes &&
+                <div className="indisponivel">
+                    <p>
+                        Produto indisponível
+                    </p> 
+                </div>
+            }
             {vendoDetalhes ? (
                 <>
                     <div className="detalhes">
@@ -147,6 +160,7 @@ const Product: React.FC<ProdutoProps> = ({ produto, onDelete }) => {
                                                 className='selectCategoria' 
                                                 value={produto.categoria} 
                                                 onChange={(e) => setCategoria(e.target.value)}
+                                                disabled={!isEditing}
                                             >
                                                  <option value="bebida">Bebida</option>
                                                  <option value="hamburguer">Hamburguer</option>

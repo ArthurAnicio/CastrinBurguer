@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';//-
-import './styles.css'//-
-import { useLocation, useNavigate } from 'react-router-dom';//-
-import api from '../../api';//
+import { useState, useEffect } from 'react';
+import './styles.css'
+import { useLocation, useNavigate } from 'react-router-dom';
+import api from '../../api';
+import castrinImage from '../../assets/images/CastrinBurguer.png';
 
 function Header() {
   const [isLogging, setIsLogging] = useState(false);
@@ -45,7 +46,7 @@ function Header() {
     <header className={tipo == 'adm'?'cabecarioAdm':''}>
       <img
         className='imagemHambuguer'
-        src="https://cdn.discordapp.com/attachments/1005168389955797095/1306765076669272094/CastrinBurguer-Photoroom.png?ex=673c7890&is=673b2710&hm=e30679117fe41f8044583a42e3524e57b55692aa1d52b356be50e64eb17dacc6&"
+        src={castrinImage}
         alt="Foto burguer"
       />
       {tipo == 'adm' && 

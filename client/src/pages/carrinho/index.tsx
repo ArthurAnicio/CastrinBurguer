@@ -30,6 +30,7 @@ function Cart() {
     }, []);
 
     async function fetchProdutos() {
+        console.log('Carrinho:'+produtos);
         if (produtos.length <= 0) {
             navigate('/', { state: { user, carrinho: produtos } });
             return;
@@ -126,13 +127,13 @@ function Cart() {
                             id="finalizar"
                             onClick={criarPedido}
                         >
-                            Finalizar Compra
+                            Finalizar Pedido
                         </button>
                         <button 
                             id="cancelar"
                             onClick={() => navigate('/', { state: { user, carrinho: [] } })}
                         >
-                            Cancelar Compra
+                            Cancelar Pedido
                         </button>
                     </div>
                 </div>

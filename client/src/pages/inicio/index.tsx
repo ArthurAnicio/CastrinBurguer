@@ -73,7 +73,6 @@ function Home() {
         if(newProduto.nome && newProduto.descricao && newProduto.preco && newProduto.quantidade > 0 && newProduto.categoria && newProduto.imagem) {    
             try {
                 const response = await api.post('/produto', newProduto);
-                console.log('Produto adicionado:', response.data);
                 setProdutos([...produtos, { ...newProduto, id: response.data.id }]);
                 setProdutosFiltrados([...produtos, { ...newProduto, id: response.data.id }]);
                 setNewProduto({ nome: '', descricao: '', preco: '', quantidade: 0, categoria: '',imagem: '' });
