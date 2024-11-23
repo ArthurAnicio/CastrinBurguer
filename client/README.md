@@ -28,10 +28,10 @@ Dependências Principais:
 ⚙️ Scripts Disponíveis
 Os comandos abaixo podem ser executados na pasta server:
 
-bash
 Copiar código
-npm run start      # 🚀 Inicia o servidor
+npm start      # 🚀 Inicia o servidor
 npm run migrate    # 📂 Aplica as migrações no banco de dados
+
 🛠️ Como Configurar e Executar
 1️⃣ Clone o Repositório
 bash
