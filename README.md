@@ -56,7 +56,7 @@ Os comandos abaixo podem ser executados na pasta server:
 
   1️⃣ Clone o Repositório
 
-    git clone <url-do-repositorio>
+    git clone (https://github.com/ArthurAnicio/CastrinBurguer.git)
 
     cd CastrinBurguer
   
