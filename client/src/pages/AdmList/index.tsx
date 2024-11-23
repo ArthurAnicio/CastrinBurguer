@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import './styles.css';
 import api from "../../api"; 
+import Header from '../../components/Header';
+
 
 interface User {
   id: number;
@@ -86,6 +88,9 @@ function AdmList() {
   };
 
   return (
+    <>
+                <Header />
+
     <div className="listaUsuarios">
       <h1>Lista de Usuários</h1>
       <ul>
@@ -113,6 +118,7 @@ function AdmList() {
       </ul>
       <button onClick={() => navigate("/",{state: {user}})}>Voltar</button>
     </div>
+    </>
   );
 }
 
