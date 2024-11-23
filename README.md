@@ -17,7 +17,7 @@ Castrin Burguer é um sistema completo para gerenciar pedidos de hambúrgueres, 
 
   ⚙️ Scripts Disponíveis
 
-    Os comandos abaixo podem ser executados na pasta client:
+  Os comandos abaixo podem ser executados na pasta client:
 
     npm run dev        # 🚧 Inicia o servidor de desenvolvimento
 
