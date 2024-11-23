@@ -51,6 +51,7 @@ export default class ProdutoController{
 
         if(!nome ||!descricao ||!preco ||!quantidade ||!categoria ||!imagem){
             return res.status(400).json({error: 'Todos os dados são obrigatórios!'});
+            
         }else{
             try{
                 await trx('produtos')

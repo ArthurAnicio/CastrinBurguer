@@ -21,6 +21,7 @@ function PedidosList() {
     const location = useLocation();
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
     const [isAdm, setIsAdm] = useState(false);
+    const [pedidos, setPedidos] = useState<Pedido[]>([]);
     const [pedidosUser, setPedidosUser] = useState<Pedido[]>([]);
     const [nome, setNome] = useState('');
     const [nCartao, setNCartao] = useState('');
@@ -34,13 +35,34 @@ function PedidosList() {
             setIsAdm(false);
         }
         fetchPedidos();
+        fetchPedidosUser();
     }, []);
+
 
     async function fetchPedidos() {
         try {
             const response = await api.get('/pedido');
+            const pedidos = response.data;
+            setPedidos(pedidos);
+        } catch (err) {
+            console.error('Erro ao carregar pedidos:', err);
+        }
+    }   
+    async function fetchPedidosUser() {
+        try {
+            const response = await api.get('/pedido');
             const pedidos = response.data.filter((pedido: Pedido) => pedido.user_id === user.id);
-            setPedidosUser(pedidos);
+            // Processar os produtos diretamente ao buscar
+            const pedidosComProdutos = pedidos.map((pedido: Pedido) => {
+                try {
+                    const produtos = JSON.parse(JSON.parse(pedido.produtos));
+                    return { ...pedido, produtosArray: produtos.produtos || [] };
+                } catch (error) {
+                    console.error('Erro ao processar produtos:', error);
+                    return { ...pedido, produtosArray: [] };
+                }
+            });
+            setPedidosUser(pedidosComProdutos);
         } catch (err) {
             console.error('Erro ao carregar pedidos:', err);
         }
@@ -80,11 +102,30 @@ function PedidosList() {
             const response = await api.delete(`/pedido?id=${pedidoId}`)
             if(response.status === 200){
                 fetchPedidos();
+                fetchPedidosUser();
             } else {
                 alert(response.data.error);
             }
         }catch(err){
             alert('Erro ao apagar o pedido.');
+        }
+    }
+
+    async function updateStatus(id: number, status: string) {
+        try {
+            const response = await api.put('/pedido-status', { id, status });
+            if (response.status === 200) {
+                setPedidosUser((prevPedidos) =>
+                    prevPedidos.map((pedido) =>
+                        pedido.id === id ? { ...pedido, status } : pedido
+                    )
+                );
+            } else {
+                alert(response.data.error);
+            }
+            fetchPedidos();
+        } catch (err) {
+            alert('Erro ao atualizar o status do pedido.');
         }
     }
 
@@ -149,10 +190,11 @@ function PedidosList() {
                 }
                 <div className="pedidosList">
                     {
-                        pedidosUser.map((pedido: Pedido) => {
+                        isAdm?
+                        pedidos.map((pedido: Pedido) => {
                             const isPayed = pedido.status !== 'Aguardando pagamento';
                             let produtosArray: number[] = [];
-
+                        
                             try {
                                 const produtos: ProdutosLista = JSON.parse(JSON.parse(pedido.produtos));
                                 if (Array.isArray(produtos.produtos)) {
@@ -163,9 +205,7 @@ function PedidosList() {
                             } catch (error) {
                                 console.error('Erro ao analisar produtos do pedido:', error);
                             }
-
-                            console.log('Array original:', produtosArray);
-                            console.log('Quantidade de itens:', produtosArray.length);
+                        
                             return (
                                 <div
                                     key={pedido.id}
@@ -173,22 +213,24 @@ function PedidosList() {
                                 >
                                     <h1>Pedido</h1>
                                     <div className="produtosPedido">
-                                
                                         Quantidade de itens: {produtosArray.length}
                                     </div>
                                     <p className='precoPedido'>Preço: {pedido.preco}</p>
                                     <div className="statusDePagamento">
-                                        <span className='statusPedido'>Status: {pedido.status}</span>
+                                        <span className='statusPedido'>Status:</span>
+                                        <select
+                                            onChange={(e) => updateStatus(pedido.id, e.target.value)}
+                                            value={pedido.status} // Certifique-se de que o valor é atualizado
+                                        >
+                                            <option value="Aguardando pagamento">Aguardando pagamento</option>
+                                            <option value="Enviado">Enviado</option>
+                                            <option value="Entregue">Entregue</option>
+                                        </select>
+                        
                                         {isPayed ? 
-                                            <p>Pago</p> 
-                                        : 
-                                            <div 
-                                                className='pagar'
-                                                onClick={()=>{setPedidoId(pedido.id); setIsShopping(true)}}
-                                            >
-                                                <i className="fa-solid fa-money-check-dollar"></i>
-                                            </div>
-                                        }
+                                            <p id='pago'>Pago</p> 
+                                            : 
+                                            <p id='naoPago'>Não pago</p>}
                                     </div>
                                     <button 
                                         className="apagar" 
@@ -201,7 +243,64 @@ function PedidosList() {
                                     </button>
                                 </div>
                             );
-                        })
+                         })    
+                        :
+                            pedidosUser.map((pedido: Pedido) => {
+                                const isPayed = pedido.status !== 'Aguardando pagamento';
+                                let produtosArray: number[] = [];
+
+                                try {
+                                    const produtos: ProdutosLista = JSON.parse(JSON.parse(pedido.produtos));
+                                    if (Array.isArray(produtos.produtos)) {
+                                        produtosArray = produtos.produtos;
+                                    } else {
+                                        console.error('produtos.produtos não é um array:', produtos.produtos);
+                                    }
+                                } catch (error) {
+                                    console.error('Erro ao analisar produtos do pedido:', error);
+                                }
+
+                                console.log('Array original:', produtosArray);
+                                console.log('Quantidade de itens:', produtosArray.length);
+                                return (
+                                    <div
+                                        key={pedido.id}
+                                        className="pedidoItem"
+                                    >
+                                        <h1>Pedido</h1>
+                                        <div className="produtosPedido">
+                                    
+                                            Quantidade de itens: {produtosArray.length}
+                                        </div>
+                                        <p className='precoPedido'>Preço: {pedido.preco}</p>
+                                        <div className="statusDePagamento">
+                                            <span className='statusPedido'>Status: {pedido.status}</span>
+                                            
+                                            {isPayed ? 
+                                                    <p>Pago</p> 
+                                                : 
+                                                    <div 
+                                                            className='pagar'
+                                                            onClick={()=>{setPedidoId(pedido.id); setIsShopping(true)}}
+                                                        >
+                                                            <i className="fa-solid fa-money-check-dollar"></i>
+                                                    </div>
+                                            }
+                                                
+                                            
+                                        </div>
+                                        <button 
+                                            className="apagar" 
+                                            onClick={() => { setPedidoId(pedido.id); apagar(); }}
+                                        >   
+                                            Excluir
+                                            <i 
+                                                className="fa-solid fa-trash-alt"
+                                            />
+                                        </button>
+                                    </div>
+                                );
+                            })
                     }
                 </div>
             </div>

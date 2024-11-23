@@ -108,7 +108,7 @@ function AdmList() {
           ))
         )}
       </ul>
-      <button onClick={() => navigate("/")}>Voltar</button>
+      <button onClick={() => navigate("/",{state: {user}})}>Voltar</button>
     </div>
   );
 }
