@@ -48,9 +48,9 @@ Dependências Principais:
 
 Os comandos abaixo podem ser executados na pasta server:
 
-  npm run start      # 🚀 Inicia o servidor
+    npm run start      # 🚀 Inicia o servidor
 
-  npm run migrate    # 📂 Aplica as migrações no banco de dados
+    npm run migrate    # 📂 Aplica as migrações no banco de dados
   
 🛠️ Como Configurar e Executar
 
@@ -78,7 +78,7 @@ Os comandos abaixo podem ser executados na pasta server:
   
     npm run migrate
   
-    npm run start
+    npm start
   
   O servidor estará disponível em: http://localhost:3000 🔗
 
