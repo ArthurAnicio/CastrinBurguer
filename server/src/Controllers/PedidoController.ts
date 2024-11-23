@@ -17,14 +17,14 @@ export default class PedidoController {
     
         if (user_id && produtos && preco && status) {
             try {
-                await trx("pedidos").insert({
+                const [pedidoId] = await trx("pedidos").insert({
                     user_id,
                     produtos: JSON.stringify(produtos),
                     preco,
                     status
                 });
                 await trx.commit();
-                res.status(201).json({ message: 'Pedido criado com sucesso!' });
+                res.status(201).json(pedidoId);
             } catch (err) {
                 await trx.rollback();
                 res.status(400).json({ error: `Erro ao cadastrar pedido: ${err}` });
@@ -96,7 +96,7 @@ export default class PedidoController {
     async shop(req: Request, res: Response) {
         const { id } = req.query;
         const trx = await db.transaction();
-    
+        console.log('id recebido:'+id);
         if (!id) {
             return res.status(400).json({ error: 'ID do pedido é obrigatório!' });
         }
@@ -106,18 +106,26 @@ export default class PedidoController {
                 .select('produtos')
                 .where({ id })
                 .first();
-    
+            
+            console.log(pedido)
+
             if (!pedido) {
                 return res.status(404).json({ error: 'Pedido não encontrado!' });
             }
 
-            const produtos = JSON.parse(pedido.produtos); 
+            const rawProdutos = pedido.produtos;
+            const produtos = typeof rawProdutos === 'string' && rawProdutos.startsWith('"')
+                ? JSON.parse(JSON.parse(rawProdutos))
+                : JSON.parse(rawProdutos);
+            
+            console.log(produtos)
     
             for (const produtoId of produtos) {
+                console.log('Id:'+produtoId)
                 const produto = await trx('produtos')
                     .where('id', produtoId)
                     .first();
-    
+                console.log('Produto:'+produto)
                 if (!produto || produto.quantidade <= 0) {
                     await trx.rollback();
                     return res.status(400).json({ 

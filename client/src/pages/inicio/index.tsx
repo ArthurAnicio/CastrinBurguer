@@ -116,9 +116,14 @@ function Home() {
                     </div>
                     : null
                 }
-                <div className="historicoDeCompraPopUp">
-                    <i className="fa-solid fa-history"></i>
-                </div>
+                {isLoggedIn &&
+                    <div 
+                        className="historicoDeCompraPopUp"
+                        onClick={() => navigate('/pedidos', {state : {user}}) }
+                    >
+                        <i className="fa-solid fa-history"></i>
+                    </div>
+                }
                 <div className="filtro">
                     <button 
                         className="filtroBtn" 

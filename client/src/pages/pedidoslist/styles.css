@@ -1,0 +1,103 @@
+.voltarAoInicio{
+    padding: 1rem 2rem;
+    position: fixed;
+    border-radius: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--branco);
+    background: var(--roxo);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.voltarAoInicio:hover{
+    background: var(--roxo2);
+    scale: 0.95;
+}
+
+.pedidosList{
+    width: 600px;
+    margin: 8rem auto;
+}
+
+.pedidoItem{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: var(--branco);
+    border-radius: 1rem;
+    transition: 0.2s;
+    color: var(--preto);
+    font-size: 2rem;
+}
+
+.pedidoItem h1{
+    margin-bottom: 1rem;
+}
+
+.produtosPedido{
+    margin: 2rem 1rem;
+}
+
+.precoPedido{
+    font-weight: 700;
+    margin: 2rem 1rem;
+}
+
+.statusDePagamento{
+    display: flex;
+    align-items: center;
+    margin: 2rem 1rem;
+}
+
+.statusDePagamento p{
+    color: var(--verde);
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-left: 2rem;
+}
+
+.pagar{
+    margin-left: 2rem;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    font-weight: 700;
+    background: var(--verde);
+    color: var(--branco);
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pagar:hover{
+    background: var(--verde2);
+    scale: 0.95;
+}
+
+.apagar{
+    margin-left: 1rem;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 700;
+    background: var(--vermelho);
+    color: var(--branco);
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.apagar:hover{
+    background: var(--vermelho2);
+    scale: 0.95;
+}

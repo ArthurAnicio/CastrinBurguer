@@ -18,20 +18,21 @@ routes.put('/produto', produtoController.update);
 routes.delete('/produto', produtoController.delete);
 
 //routes Users
-routes.get('/user', userController.login)
-routes.get('/all-users', userController.index)
-routes.put('/user', userController.swipeType)
-routes.post('/user', userController.create)
-routes.delete('/user', userController.delete)
+routes.get('/user', userController.login);
+routes.get('/all-users', userController.index);
+routes.put('/user', userController.swipeType);
+routes.post('/user', userController.create);
+routes.delete('/user', userController.delete);
 
 //routes Pedidos
-routes.get('/pedido', pedidoController.index)
-routes.post('/pedido', pedidoController.create)
-routes.put('/pedido-produtos', pedidoController.updateProducts)
-routes.put('/pedido-preco', pedidoController.updatePrice)
-routes.put('/pedido-status', pedidoController.updateStatus)
-routes.delete('/pedido', pedidoController.delete)
-routes.delete('/shop', pedidoController.shop)
+routes.get('/pedido', pedidoController.index);
+routes.post('/pedido', pedidoController.create);
+routes.put('/pedido-produtos', pedidoController.updateProducts);
+routes.put('/pedido-preco', pedidoController.updatePrice);
+routes.put('/pedido-status', pedidoController.updateStatus);
+routes.delete('/shop', pedidoController.shop);
+routes.delete('/pedido', pedidoController.delete);
+
 
 /*routes.get("/validar", (req, res) => {
     const authHeader = req.headers.authorization;
