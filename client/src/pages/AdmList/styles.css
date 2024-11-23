@@ -1,0 +1,99 @@
+.listaUsuarios {
+    width: 80%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--cinza2);
+    border-radius: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.listaUsuarios h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--preto);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.listaUsuarios ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.listaUsuarios li {
+    background: var(--branco);
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.listaUsuarios li:hover {
+    transition: 0.3s;
+
+    background: var(--cinza);
+    transform: scale(1.02);
+}
+
+.listaUsuarios .usuarioInfo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.listaUsuarios .usuarioInfo span {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--preto);
+}
+
+.listaUsuarios select {
+    padding: 0.8rem 1.5rem;
+    font-size: 2rem;
+    border-radius: 1.5rem;
+    border: 1px solid var(--roxo);
+    background: var(--branco);
+    transition: 0.2s;
+}
+
+.listaUsuarios select:focus {
+    border: 1px solid var(--roxo2);
+    outline: none;
+}
+
+.listaUsuarios button {
+    padding: 1rem 2rem;
+    background: var(--laranja);
+    color: var(--branco);
+    font-size: 2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.listaUsuarios button:hover {
+    background: var(--laranja2);
+    scale: 0.95;
+    
+}
+
+.listaUsuarios .contadorUsuarios {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--vermelho);
+    color: var(--branco);
+    padding: 0.5rem 1rem;
+    font-size: 2rem;
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--branco);
+}
