@@ -50,35 +50,38 @@ function AdmList() {
     }));
   };
 
-  const changeUserType = (userId: number) => {
+  const changeUserType = async (userId: number) => {
     const newType = userTypes[userId];
-    if (newType) {
-      api.put(`/swipeType`, { id: userId, tipo: newType })
-        .then((response) => {
-          console.log("Tipo de usuário alterado:", response.data.message);
-          setUsers(users.map(user =>
-            user.id === userId ? { ...user, tipo: newType } : user
-          ));
-        })
-        .catch((err) => {
-          console.error("Erro ao alterar tipo:", err.response?.data?.error || err);
-        });
-    } else {
+    if (!newType) {
       alert("Por favor, selecione um tipo de usuário.");
+      return;
+    }
+  
+    try {
+      const response = await api.put(`/user`, { id: userId, tipo: newType })
+
+      console.log("Tipo de usuário alterado:", response.data.message);
+  
+      setUsers(users.map(user => 
+        user.id === userId ? { ...user, tipo: newType } : user
+      ));
+    } catch (err) {
+      console.error("Erro ao alterar tipo:", err.response?.data?.error || err);
     }
   };
 
-  const deleteUser = (userId: number) => {
+  const deleteUser = async (userId: number) => {
     const confirmDelete = window.confirm("Tem certeza que deseja excluir este usuário?");
-    if (confirmDelete) {
-      api.delete(`/delete`, { params: { id: userId } })
-        .then((response) => {
-          console.log("Usuário excluído:", response.data.message);
-          setUsers(users.filter(user => user.id !== userId)); 
-        })
-        .catch((err) => {
-          console.error("Erro ao excluir usuário:", err.response?.data?.error || err);
-        });
+    if (!confirmDelete) return;
+  
+    try {
+      const response = await api.delete(`/user`, { params: { id: userId } })
+
+      console.log("Usuário excluído:", response.data.message);
+  
+      setUsers(users.filter(user => user.id !== userId));
+    } catch (err) {
+      console.error("Erro ao excluir usuário:", err.response?.data?.error || err);
     }
   };
 
