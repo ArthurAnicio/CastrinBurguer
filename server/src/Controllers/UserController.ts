@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-//import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import db from "../db/connection";
 
-//export const SECRET_KEY = "senhamuitosecretaefodonaeeuvoucolocarnumeropraficarmaissecreta123456789";
+export const SECRET_KEY = "senhamuitosecretaefodonaeeuvoucolocarnumeropraficarmaissecreta123456789";
 
 export default class UserController {
 
@@ -42,18 +42,24 @@ export default class UserController {
   }
   async login(req: Request, res: Response) {
     const { email, senha } = req.query;
+  
     try {
       const user = await db("users").where({ email }).first();
       if (!user || user.senha !== senha) {
         return res.status(401).json({ error: "Email ou senha inválidos" });
-      }else {
-        return res.status(200).json(user)
       }
+  
+      const token = jwt.sign(
+        { id: user.id, tipo: user.tipo },
+        SECRET_KEY,
+        { expiresIn: "1h" }
+      );
+  
+      return res.status(200).json({ token, user });
     } catch (err) {
-      return res.status(400).json({ error: `Erro ao buscar usuário: ${err}` });
+      return res.status(400).json({ error: `Erro ao autenticar usuário: ${err}` });
     }
   }
-
   async swipeType(req: Request, res: Response) {
     const { id, tipo } = req.body;
     const trx = await db.transaction();

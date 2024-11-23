@@ -20,25 +20,34 @@ function Header() {
       setIsLogged(true);
     } else {
       setTipo('user');
+      setIsLogged(false);
     }
   }, [user]);
 
   async function login() {
     if (email && senha) {
       try {
-        const response = await api.get(`/user?email=${email}&senha=${senha}`);
+        const response = await api.get(`/user`, { params: { email, senha } });
         if (response.status === 200) {
-          navigate('/', { state: { user: response.data, islogged } });
+          const { user, token } = response.data;
+  
+          localStorage.setItem("token", token);
+  
+          setIsLogged(true);
+          setTipo(user.tipo);
           setIsLogging(false);
+  
+          // Redireciona para a página principal
+          navigate("/", { state: { user } });
         } else {
-          alert('Email ou senha inválidos!');
+          alert("Email ou senha inválidos!");
         }
       } catch (err) {
-        alert('Ocorreu um erro ao tentar logar!');
+        console.error("Erro no login:", err);
+        alert("Ocorreu um erro ao tentar logar!");
       }
     } else {
-      alert('Por favor, preencha todos os campos!');
-      return;
+      alert("Por favor, preencha todos os campos!");
     }
   }
 
@@ -59,53 +68,53 @@ function Header() {
         <i className="fa-solid fa-user"></i>
       </div>
       {isLogging && (
-        <div className="dropdown">
-          <h1>Bem Vindo</h1>
-          {islogged ? (
-            <>
-              <h1>{user.nome}</h1>
-              <button 
-                className='deslogar'
-                onClick={() => {
-                  setIsLogged(false);
-                  navigate('/');
-                }}
-              >
-                Deslogar
-                <i className="fa-solid fa-sign-out-alt"></i>
-              </button>
-            </>
-          ) : (
-            <div>
-              <div className="campoform">
-                <label>Login:</label>
-                <input
-                  type="text"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="campoform">
-                <label>Senha:</label>
-                <input
-                  type="password"
-                  placeholder="Senha"
-                  value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
-                />
-              </div>
-              <span className='fakelink'>
-                Não tem uma conta?
-                <span onClick={() => navigate('/criar-conta')}>
-                  Crie uma
-                </span>
-              </span>
-              <button onClick={login}>Login</button>
-            </div>
-          )}
+  <div className="dropdown">
+    <h1>Bem Vindo</h1>
+    {islogged ? (
+      <>
+        <h1>{user.nome}</h1>
+        <button 
+          className='deslogar'
+          onClick={() => {
+            setIsLogged(false);
+            navigate('/', { state: { user: { id: 0, nome: '', email: '', senha: '', tipo: 'user' }, islogged: false } });
+          }}
+        >
+          Deslogar
+          <i className="fa-solid fa-sign-out-alt"></i>
+        </button>
+      </>
+    ) : (
+      <div>
+        <div className="campoform">
+          <label>Login:</label>
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
-      )}
+        <div className="campoform">
+          <label>Senha:</label>
+          <input
+            type="password"
+            placeholder="Senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+          />
+        </div>
+        <span className='fakelink'>
+          Não tem uma conta?
+          <span onClick={() => navigate('/criar-conta')}>
+            Crie uma
+          </span>
+        </span>
+        <button onClick={login}>Login</button>
+      </div>
+    )}
+  </div>
+)}
     </header>
   );
 }

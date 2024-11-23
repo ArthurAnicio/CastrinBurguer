@@ -4,7 +4,6 @@ import './styles.css';
 import api from "../../api"; 
 import Header from '../../components/Header';
 
-
 interface User {
   id: number;
   nome: string;
@@ -28,20 +27,25 @@ function AdmList() {
 
   useEffect(() => {
     if (user.tipo === "adm") {
-      api.get("/all-users")
-        .then((response) => {
-          console.log("Resposta da API:", response);
-          setUsers(response.data);
-        
-          const initialUserTypes = response.data.reduce((acc: { [key: number]: string }, user: User) => {
-            acc[user.id] = user.tipo;
-            return acc;
-          }, {});
-          setUserTypes(initialUserTypes);
-        })
-        .catch((err) => {
-          console.error("Erro ao buscar usuários:", err);
-        });
+
+      api.get("/all-users", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}` 
+        }
+      })
+      .then((response) => {
+        console.log("Resposta da API:", response);
+        setUsers(response.data);
+      
+        const initialUserTypes = response.data.reduce((acc: { [key: number]: string }, user: User) => {
+          acc[user.id] = user.tipo;
+          return acc;
+        }, {});
+        setUserTypes(initialUserTypes);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar usuários:", err);
+      });
     }
   }, [user]);
 
@@ -60,7 +64,11 @@ function AdmList() {
     }
   
     try {
-      const response = await api.put(`/user`, { id: userId, tipo: newType })
+      const response = await api.put(`/user`, { id: userId, tipo: newType }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
 
       console.log("Tipo de usuário alterado:", response.data.message);
   
@@ -77,7 +85,12 @@ function AdmList() {
     if (!confirmDelete) return;
   
     try {
-      const response = await api.delete(`/user`, { params: { id: userId } })
+      const response = await api.delete(`/user`, {
+        params: { id: userId },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
 
       console.log("Usuário excluído:", response.data.message);
   
@@ -89,35 +102,34 @@ function AdmList() {
 
   return (
     <>
-                <Header />
-
-    <div className="listaUsuarios">
-      <h1>Lista de Usuários</h1>
-      <ul>
-        {users.length === 0 ? (
-          <p>Nenhum usuário encontrado.</p>
-        ) : (
-          users.map((user) => (
-            <li key={user.id}>
-              <div className="usuarioInfo">
-                <span>{user.nome} - {user.email} - {user.tipo}</span>
-                <select 
-                  value={userTypes[user.id] || ''} 
-                  onChange={(e) => handleTypeChange(user.id, e.target.value)} 
-                >
-                  <option value="">Selecione o tipo</option>
-                  <option value="adm">Administrador</option>
-                  <option value="user">Usuário</option>
-                </select>
-              </div>
-              <button onClick={() => changeUserType(user.id)}>Alterar Tipo</button>
-              <button onClick={() => deleteUser(user.id)}>Excluir</button>
-            </li>
-          ))
-        )}
-      </ul>
-      <button onClick={() => navigate("/",{state: {user}})}>Voltar</button>
-    </div>
+      <Header />
+      <div className="listaUsuarios">
+        <h1>Lista de Usuários</h1>
+        <ul>
+          {users.length === 0 ? (
+            <p>Nenhum usuário encontrado.</p>
+          ) : (
+            users.map((user) => (
+              <li key={user.id}>
+                <div className="usuarioInfo">
+                  <span>{user.nome} - {user.email} - {user.tipo}</span>
+                  <select 
+                    value={userTypes[user.id] || ''} 
+                    onChange={(e) => handleTypeChange(user.id, e.target.value)} 
+                  >
+                    <option value="">Selecione o tipo</option>
+                    <option value="adm">Administrador</option>
+                    <option value="user">Usuário</option>
+                  </select>
+                </div>
+                <button onClick={() => changeUserType(user.id)}>Alterar Tipo</button>
+                <button onClick={() => deleteUser(user.id)}>Excluir</button>
+              </li>
+            ))
+          )}
+        </ul>
+        <button onClick={() => navigate("/",{state: {user}})}>Voltar</button>
+      </div>
     </>
   );
 }

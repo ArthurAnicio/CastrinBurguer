@@ -2,8 +2,10 @@ import express from 'express';
 import ProdutoController from './Controllers/ProdutoController';
 import UserController from './Controllers/UserController';
 import PedidoController from './Controllers/PedidoController';
-//import { SECRET_KEY } from './UserController';
-//import jwt from 'jsonwebtoken';
+import { SECRET_KEY } from './Controllers/UserController';
+import jwt from 'jsonwebtoken';
+import { authenticateToken } from "./db/middleware/auth";
+
 
 const routes = express.Router();
 const produtoController = new ProdutoController();
@@ -19,10 +21,10 @@ routes.delete('/produto', produtoController.delete);
 
 //routes Users
 routes.get('/user', userController.login);
-routes.get('/all-users', userController.index);
-routes.put('/user', userController.swipeType);
+routes.get("/all-users", authenticateToken, userController.index);
+routes.put("/user", authenticateToken, userController.swipeType);
 routes.post('/user', userController.create);
-routes.delete('/user', userController.delete);
+routes.delete("/user", authenticateToken, userController.delete);
 
 //routes Pedidos
 routes.get('/pedido', pedidoController.index);
@@ -34,7 +36,7 @@ routes.delete('/shop', pedidoController.shop);
 routes.delete('/pedido', pedidoController.delete);
 
 
-/*routes.get("/validar", (req, res) => {
+routes.get("/validar", (req, res) => {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(" ")[1];
   
@@ -49,7 +51,7 @@ routes.delete('/pedido', pedidoController.delete);
   
       res.json({ isValid: true, tipo: decoded.tipo });
     });
-});*/
+});
 
 
 export default routes;
