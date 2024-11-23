@@ -73,7 +73,6 @@ function Cart() {
                 status
             });
             if(response.status === 201){
-                alert('Pedido criado com sucesso!');
                 setPedidoId(response.data)
             } else {
                 alert(response.data.error);

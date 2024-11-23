@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import db from "../db/connection";
 
+interface ProdutosLista{
+    produtos: number[];
+}
+
 export default class PedidoController {
     async index(req: Request, res: Response) {
         try {
@@ -114,13 +118,18 @@ export default class PedidoController {
             }
 
             const rawProdutos = pedido.produtos;
-            const produtos = typeof rawProdutos === 'string' && rawProdutos.startsWith('"')
+            const produtos: ProdutosLista = typeof rawProdutos === 'string' && rawProdutos.startsWith('"')
                 ? JSON.parse(JSON.parse(rawProdutos))
                 : JSON.parse(rawProdutos);
             
+            const produtosArray = produtos.produtos
+            if (!Array.isArray(produtosArray)) {
+                return res.status(400).json({ error: 'Os produtos do pedido devem ser um array!' });
+            }
+            console.log(produtosArray)
             console.log(produtos)
     
-            for (const produtoId of produtos) {
+            for (const produtoId of produtosArray) {
                 console.log('Id:'+produtoId)
                 const produto = await trx('produtos')
                     .where('id', produtoId)

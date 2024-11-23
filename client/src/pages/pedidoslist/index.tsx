@@ -13,15 +13,6 @@ interface Pedido{
     status: string;
 }
 
-interface Produto{
-    id: number;
-    nome: string;
-    preco: string;
-    quantidade: number;
-    categoria: string;
-    imagem: string;
-}
-
 interface ProdutosLista{
     produtos: number[];
 }
@@ -31,7 +22,6 @@ function PedidosList() {
     const user = location.state?.user || { id: 0, nome: '', email: '', senha: '', tipo: 'user' };
     const [isAdm, setIsAdm] = useState(false);
     const [pedidosUser, setPedidosUser] = useState<Pedido[]>([]);
-    const [produtosDetalhados, setProdutosDetalhados] = useState<Record<number, Produto[]>>({});
     const [nome, setNome] = useState('');
     const [nCartao, setNCartao] = useState('');
     const [isShooping, setIsShopping] = useState(false);
