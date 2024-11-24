@@ -9,7 +9,7 @@ export async function up(knex: Knex){
             table.string('preco').notNullable();
             table.integer('quantidade').notNullable();
             table.string('categoria').notNullable();
-            table.string('imagem').notNullable;
+            table.string('imagem').notNullable();
         })  
     )
 }

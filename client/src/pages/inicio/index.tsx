@@ -170,21 +170,20 @@ function Home() {
                     ))}
                 </div>
 
-                {areAdm && (
-            <button 
-        className='userListButton' 
-        onClick={() => navigate('/lista', { state: { user } })}
-    >
-        Ver Lista de Usuários
-    </button>
-)}
-
                 {areAdm &&
                     <button className='add' onClick={() => setIsAdding(!isAdding)}>
                         {isAdding ? 'Cancelar' : 'Adicionar Produto'}
                     </button>
                 }
-               
+                
+                {areAdm && (
+                        <button 
+                            className='userListButton' 
+                            onClick={() => navigate('/lista', { state: { user } })}
+                        >
+                            Ver Lista de Usuários
+                        </button>
+                )}
                 {isAdding && areAdm && (
 
 

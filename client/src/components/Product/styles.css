@@ -59,7 +59,7 @@
 .img{
     width: 100%;
     height: 210px;
-    background: var(--preto);
+    background: var(--amarelo3);
     display: flex;
     align-items: center;
 }
@@ -128,6 +128,7 @@
 
 .descricaoProduto{
     font-size: 2rem;
+    width: 100%;
     border: none;
     background: var(--branco);
     color: var(--preto);

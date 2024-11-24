@@ -4,7 +4,7 @@ import UserController from './Controllers/UserController';
 import PedidoController from './Controllers/PedidoController';
 import { SECRET_KEY } from './Controllers/UserController';
 import jwt from 'jsonwebtoken';
-import { authenticateToken } from "./db/middleware/auth";
+import { authenticateToken } from "./middleware/auth";
 
 
 const routes = express.Router();

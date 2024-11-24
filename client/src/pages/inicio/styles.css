@@ -195,9 +195,11 @@
     width: 350px;
     margin: 2rem auto;
     padding: 1rem;
-    background: var(--azul);
+    background: var(--roxo);
     color: var(--branco);
     font-size: 3rem;
+    display: flex;
+    justify-content: center;
     font-weight: 700;
     border: none;
     border-radius: 2rem;
@@ -206,6 +208,6 @@
 }
 
 .userListButton:hover{
-    background: var(--azul2);
+    background: var(--roxo2);
     scale: 0.95;
 }

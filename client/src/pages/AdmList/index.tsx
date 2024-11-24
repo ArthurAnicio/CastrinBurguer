@@ -11,6 +11,8 @@ interface User {
   tipo: string;
 }
 
+//----ÚNICA PÁGINA FEITA PELO KATATAU----//
+
 function AdmList() {
   const [users, setUsers] = useState<User[]>([]);
   const [userTypes, setUserTypes] = useState<{ [key: number]: string }>({});
