@@ -4,7 +4,7 @@
 Castrin Burguer é um sistema completo para gerenciar pedidos de hambúrgueres, combinando uma interface moderna em React com um backend robusto em Node.js. Explore as funcionalidades incríveis e saboreie a simplicidade do código! 🚀
 
 ## 📂 Estrutura do Projeto
-###🎨 Cliente
+### 🎨 Cliente
   Framework: React + TypeScript
   Build Tool: Vite
   Dependências Principais:
@@ -28,8 +28,8 @@ Castrin Burguer é um sistema completo para gerenciar pedidos de hambúrgueres, 
     npm run lint       # ✅ Verifica o código com padrões ESLint
 
 
-###💾 Servidor
-
+### 💾 Servidor
+ 
 Framework: Express + TypeScript
 
 
@@ -52,7 +52,7 @@ Os comandos abaixo podem ser executados na pasta server:
 
     npm run migrate    # 📂 Aplica as migrações no banco de dados
   
-🛠️ Como Configurar e Executar
+##🛠️ Como Configurar e Executar
 
   1️⃣ Clone o Repositório
 
@@ -82,7 +82,7 @@ Os comandos abaixo podem ser executados na pasta server:
   
   O servidor estará disponível em: http://localhost:3000 🔗
 
-✨ Funcionalidades
+##✨ Funcionalidades
 Frontend 🖥️:
 
   📋 Interface moderna para gerenciar pedidos.
