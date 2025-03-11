@@ -52,7 +52,7 @@ Os comandos abaixo podem ser executados na pasta server:
 
     npm run migrate    # 📂 Aplica as migrações no banco de dados
   
-##🛠️ Como Configurar e Executar
+## 🛠️ Como Configurar e Executar
 
   1️⃣ Clone o Repositório
 
