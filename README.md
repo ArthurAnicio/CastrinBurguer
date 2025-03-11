@@ -83,13 +83,13 @@ Os comandos abaixo podem ser executados na pasta server:
   O servidor estará disponível em: http://localhost:3000 🔗
 
 ## ✨ Funcionalidades
-Frontend 🖥️:
+### Frontend 🖥️:
 
   📋 Interface moderna para gerenciar pedidos.
   
   🛤️ Rotas configuradas com React Router.
 
-Backend 🛠️:
+### Backend 🛠️:
   
   🌟 API RESTful para manipular dados do cliente.
   
