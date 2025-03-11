@@ -82,7 +82,7 @@ Os comandos abaixo podem ser executados na pasta server:
   
   O servidor estará disponível em: http://localhost:3000 🔗
 
-##✨ Funcionalidades
+## ✨ Funcionalidades
 Frontend 🖥️:
 
   📋 Interface moderna para gerenciar pedidos.
